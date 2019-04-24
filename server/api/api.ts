@@ -20,7 +20,7 @@ class Api {
 
     middleware(): void {
         Connection.then(() => {
-            mongoose.connect(this.config.connectionString, { useNewUrlParser: true }).then(() => {
+            mongoose.connect(this.config.mongoConnectionString, { useNewUrlParser: true }).then(() => {
                 this.express.use(morgan('dev'));
                 this.express.use(bodyParser.urlencoded({ extended: true }));
                 this.express.use(bodyParser.json());
@@ -31,8 +31,7 @@ class Api {
             }).catch((error) => {
                 console.log(`-> Falha ao tentar conectar no banco de dados(Mongo) ${error}`);    
             });
-        }).catch((error) => {
-            console.log(this.config);
+        }).catch((error) => {        
             console.log(`-> Falha ao tentar conectar no banco de dados(Postgres) ${error}`);
         });
     }

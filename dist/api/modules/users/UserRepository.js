@@ -15,9 +15,11 @@ class UserRepository extends bases_1.BaseRepository {
         super(User_1.User);
     }
     findByEmail(email) {
-        const _super = name => super[name];
+        const _super = Object.create(null, {
+            find: { get: () => super.find }
+        });
         return __awaiter(this, void 0, void 0, function* () {
-            return yield _super("find").call(this, { email: email });
+            return yield _super.find.call(this, { email: email });
         });
     }
 }

@@ -1,21 +1,27 @@
 import { createConnection } from 'typeorm';
-import { User } from '../api/models/User';
 
-const config = require('../config/env/config');
+const config = require('../config/env/config')();
 
 export const Connection = createConnection({
-    name: 'default',    
+    name: "default-connection",
     type: config.dialect,
-    database: config.db,
-    entities: [User],
     host: config.host,
-    logging: false,
-    password: config.password,
-    port: config.pgPort,    
-    synchronize: false,
+    port: config.pgPort,
     username: config.username,
-    migrations: ["migration/*.js"],
+    password: config.password,
+    database: config.db,
+    entities: [
+        "../../api/models/*.ts"
+    ],
+    subscribers: [
+        ""
+    ],
+    migrations: [
+        "../../api/migrations/*.ts"
+    ],
     cli: {
-        "migrationsDir": "migration"
+        "entitiesDir": "src/entities",
+        "migrationsDir": "src/migration",
+        "subscribersDir": "src/subscriber"
     }
 });

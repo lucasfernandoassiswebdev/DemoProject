@@ -2,6 +2,7 @@
     "name": "demo-database",
     "type": "postgres",
     "host": "localhost",
+    "driver": "postgres",
     "port": 5432,
     "username": "postgres",
     "password": "a",

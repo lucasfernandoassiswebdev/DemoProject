@@ -1,1 +1,1 @@
-module.exports = () => require(`../${process.env.NODE_ENV}.env`);
+module.exports = () => require(`./${process.env.NODE_ENV}.env`);

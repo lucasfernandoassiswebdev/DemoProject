@@ -2,7 +2,7 @@ import { Request, Response, ErrorRequestHandler, NextFunction } from 'express';
 import * as HttpStatus from 'http-status';
 import * as jwt from 'jwt-simple';
 import * as bcrypt from 'bcrypt';
-const config = require('../../../config/env/config');
+const config = require('../../../config/env/config')();
 
 class Handlers {
 
@@ -12,14 +12,12 @@ class Handlers {
 
     authSuccess(res: Response, credentials: any, data: any) {
         const isMatch = bcrypt.compareSync(credentials.password, data.password);
-        if (isMatch) {
-            const payload = { id: data.id };
+        if (isMatch)
             res.json({
-                token: jwt.encode(payload, config.secret)
+                token: jwt.encode({ id: data.id }, config.secret)
             });
-        } else {
+        else
             res.sendStatus(HttpStatus.UNAUTHORIZED);
-        }
     }
 
     onError(res: Response, message: String, err: any) {

@@ -4,22 +4,18 @@ const HttpStatus = require("http-status");
 const jwt = require("jwt-simple");
 const bcrypt = require("bcrypt");
 const config = require('../../../config/env/config')();
-
 class Handlers {
     authFail(req, res) {
         res.sendStatus(HttpStatus.UNAUTHORIZED);
     }
     authSuccess(res, credentials, data) {
         const isMatch = bcrypt.compareSync(credentials.password, data.password);
-        if (isMatch) {
-            const payload = { id: data.id };
+        if (isMatch)
             res.json({
-                token: jwt.encode(payload, config.secret)
+                token: jwt.encode({ id: data.id }, config.secret)
             });
-        }
-        else {
+        else
             res.sendStatus(HttpStatus.UNAUTHORIZED);
-        }
     }
     onError(res, message, err) {
         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ payload: err });

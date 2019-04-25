@@ -18,7 +18,7 @@ class Handlers {
             res.sendStatus(HttpStatus.UNAUTHORIZED);
     }
     onError(res, message, err) {
-        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ payload: err });
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ payload: err, message: message });
     }
     onSuccess(res, data) {
         res.status(HttpStatus.OK).json({ result: data });

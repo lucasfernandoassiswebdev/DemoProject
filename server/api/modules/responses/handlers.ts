@@ -21,7 +21,7 @@ class Handlers {
     }
 
     onError(res: Response, message: String, err: any) {
-        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ payload: err });
+        res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ payload: err, message: message });
     }
 
     onSuccess(res: Response, data: any) {

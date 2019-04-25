@@ -32,6 +32,13 @@ __decorate([
 __decorate([
     typeorm_1.Column("character varying", {
         nullable: false,
+        length: 100,
+        name: "password"
+    })
+], User.prototype, "password", void 0);
+__decorate([
+    typeorm_1.Column("character varying", {
+        nullable: false,
         length: 11,
         name: "cpf"
     })

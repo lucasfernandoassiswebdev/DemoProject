@@ -1,14 +1,13 @@
 import { Application } from 'express';
 import TokenRoutes from '../modules/auth/auth';
-//import UserRoutes from '../modules/users/UserRoutes';
+import UserRoutes from '../modules/users/UserRoutes';
 
 class Routes {
-
-    initRoutes(app: Application, auth: any): void {
-
+    
+    initRoutes(app: Application, auth: any, connection: any): void {
         app.route('/token').post(TokenRoutes.auth);
 
-        //UserRoutes.initRoutes(app, auth);        
+        UserRoutes.initRoutes(app, auth, connection);
     }
 }
 

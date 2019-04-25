@@ -14,13 +14,13 @@ const handlers_1 = require("../responses/handlers");
 const bcrypt = require("bcrypt");
 const _ = require("lodash");
 class UserController extends bases_1.BaseController {
-    constructor() {
-        super(UserService_1.default);
+    constructor(connection) {
+        super(new UserService_1.default(connection));
         this.create = (req, res) => __awaiter(this, void 0, void 0, function* () {
             if (!req.body.dtCriacao)
                 req.body.dtCriacao = new Date();
             this.hashPassword(req.body);
-            yield UserService_1.default.save(req.body)
+            yield this.userService.save(req.body)
                 .then(_.partial(handlers_1.default.onSuccess, res))
                 .catch(_.partial(handlers_1.default.onError, res, "Erro ao salvar dados"));
         });
@@ -28,6 +28,7 @@ class UserController extends bases_1.BaseController {
             const salt = bcrypt.genSaltSync(10);
             user.password = bcrypt.hashSync(user.password, salt);
         };
+        this.userService = new UserService_1.default(connection);
     }
 }
-exports.default = new UserController();
+exports.default = UserController;

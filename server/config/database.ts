@@ -1,4 +1,5 @@
 import { createConnection } from 'typeorm';
+import { User } from '../api/models/User';
 
 const config = require('../config/env/config')();
 
@@ -11,7 +12,7 @@ export const Connection = createConnection({
     password: config.password,
     database: config.db,
     entities: [
-        "../../api/models/*.ts"
+        User
     ],
     subscribers: [
         ""

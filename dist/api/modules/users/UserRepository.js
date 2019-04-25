@@ -11,8 +11,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const User_1 = require("../../models/User");
 const bases_1 = require("bases");
 class UserRepository extends bases_1.BaseRepository {
-    constructor() {
-        super(User_1.User);
+    constructor(connection) {
+        super(User_1.User, connection);
     }
     findByEmail(email) {
         const _super = Object.create(null, {
@@ -23,4 +23,4 @@ class UserRepository extends bases_1.BaseRepository {
         });
     }
 }
-exports.default = new UserRepository();
+exports.default = UserRepository;

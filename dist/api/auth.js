@@ -5,13 +5,13 @@ const passport_jwt_1 = require("passport-jwt");
 const UserService_1 = require("./modules/users/UserService");
 const config = require('../config/env/config')();
 class Auth {
-    config() {
+    config(connection) {
         let opts = {
             secretOrKey: config.secret,
             jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderWithScheme('jwt')
         };
         passport.use(new passport_jwt_1.Strategy(opts, (jwtPayload, done) => {
-            UserService_1.default.findOne({ _id: jwtPayload.id }).then(user => {
+            new UserService_1.default(connection).findOne({ _id: jwtPayload.id }).then(user => {
                 if (user) {
                     return done(null, {
                         id: user.id,

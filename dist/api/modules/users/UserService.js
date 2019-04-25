@@ -11,11 +11,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const bases_1 = require("bases");
 const UserRepository_1 = require("./UserRepository");
 class UserService extends bases_1.BaseService {
-    constructor() {
-        super(UserRepository_1.default);
-        this.getByEmail = (email) => __awaiter(this, void 0, void 0, function* () {
+    constructor(connection) {
+        super(new UserRepository_1.default(connection));
+        this.findByEmail = (email) => __awaiter(this, void 0, void 0, function* () {
             return yield UserRepository_1.default.findByEmail({ email: email });
         });
     }
 }
-exports.default = new UserService();
+exports.default = UserService;

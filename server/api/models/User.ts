@@ -25,6 +25,13 @@ export class User {
 
     @Column("character varying", {
         nullable: false,
+        length: 100,
+        name: "password"
+    })
+    password: string;
+
+    @Column("character varying", {
+        nullable: false,
         length: 11,
         name: "cpf"
     })

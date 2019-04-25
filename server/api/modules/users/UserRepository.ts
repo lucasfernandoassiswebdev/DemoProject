@@ -1,15 +1,13 @@
 import { User } from '../../models/User';
 import { BaseRepository } from 'bases';
 
-class UserRepository extends BaseRepository<User> {
+export default class UserRepository extends BaseRepository<User> {
 
-    constructor() {
-        super(User);
+    constructor(connection: any) {
+        super(User, connection);
     }
 
     public async findByEmail(email): Promise<User[]> {
         return await super.find({ email: email });
     }
 }
-
-export default new UserRepository();

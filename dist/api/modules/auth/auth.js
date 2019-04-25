@@ -19,7 +19,7 @@ class TokenRoutes {
                 password: req.body.password
             };
             if (credentials.email) {
-                yield UserService_1.default.getByEmail(credentials.email)
+                yield UserService_1.default.findByEmail(credentials.email)
                     .then(_.partial(handlers_1.default.authSuccess, res, credentials))
                     .catch(_.partial(handlers_1.default.authFail, req, res));
             }

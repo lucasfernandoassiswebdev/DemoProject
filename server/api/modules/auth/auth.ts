@@ -11,7 +11,7 @@ class TokenRoutes {
         };
 
         if (credentials.email) {
-            await UserService.getByEmail(credentials.email)
+            await UserService.findByEmail(credentials.email)
                 .then(_.partial(Handlers.authSuccess, res, credentials))
                 .catch(_.partial(Handlers.authFail, req, res));
         }

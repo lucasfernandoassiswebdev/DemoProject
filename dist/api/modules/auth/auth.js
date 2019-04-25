@@ -12,19 +12,19 @@ const _ = require("lodash");
 const UserService_1 = require("../users/UserService");
 const handlers_1 = require("../responses/handlers");
 class TokenRoutes {
-    auth(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
+    constructor(connection) {
+        this.connection = connection;
+        this.auth = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const credentials = {
                 email: req.body.email,
                 password: req.body.password
             };
             if (credentials.email) {
-                yield UserService_1.default.findByEmail(credentials.email)
+                yield new UserService_1.default(this.connection).findByEmail(credentials.email)
                     .then(_.partial(handlers_1.default.authSuccess, res, credentials))
                     .catch(_.partial(handlers_1.default.authFail, req, res));
             }
         });
     }
-    ;
 }
-exports.default = new TokenRoutes();
+exports.TokenRoutes = TokenRoutes;

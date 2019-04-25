@@ -50,6 +50,6 @@ __decorate([
     })
 ], User.prototype, "dtCriacao", void 0);
 User = __decorate([
-    typeorm_1.Entity("User", { schema: "public" })
+    typeorm_1.Entity("user")
 ], User);
 exports.User = User;

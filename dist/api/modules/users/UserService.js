@@ -13,8 +13,9 @@ const UserRepository_1 = require("./UserRepository");
 class UserService extends bases_1.BaseService {
     constructor(connection) {
         super(new UserRepository_1.default(connection));
+        this.connection = connection;
         this.findByEmail = (email) => __awaiter(this, void 0, void 0, function* () {
-            return yield UserRepository_1.default.findByEmail({ email: email });
+            return yield new UserRepository_1.default(this.connection).findByEmail(email);
         });
     }
 }

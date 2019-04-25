@@ -7,7 +7,7 @@ export default class UserRepository extends BaseRepository<User> {
         super(User, connection);
     }
 
-    public async findByEmail(email): Promise<User[]> {
-        return await super.find({ email: email });
+    public async findByEmail(email: string): Promise<User> {        
+        return await this.findOne({ email: email });
     }
 }

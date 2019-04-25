@@ -13,8 +13,8 @@ class Auth {
             jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('jwt')
         };
 
-        passport.use(new Strategy(opts, (jwtPayload, done) => {
-            new UserService(connection).findOne({ _id: jwtPayload.id }).then(user => {
+        passport.use(new Strategy(opts, (jwtPayload, done) => {            
+            new UserService(connection).findOne({ id: jwtPayload.id }).then(user => {
                 if (user) {
                     return done(null, {
                         id: user.id,

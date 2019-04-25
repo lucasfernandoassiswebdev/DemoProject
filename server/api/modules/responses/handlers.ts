@@ -10,8 +10,8 @@ class Handlers {
         res.sendStatus(HttpStatus.UNAUTHORIZED);
     }
 
-    authSuccess(res: Response, credentials: any, data: any) {        
-        const isMatch = bcrypt.compareSync(credentials.password, data.password);        
+    authSuccess(res: Response, credentials: any, data: any) {
+        const isMatch = bcrypt.compareSync(credentials.password, data.password);
         if (isMatch) {
             const payload = { id: data.id };
             res.json({

@@ -3,7 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const HttpStatus = require("http-status");
 const jwt = require("jwt-simple");
 const bcrypt = require("bcrypt");
-const config = require('../../../config/env/config');
+const config = require('../../../config/env/config')();
+
 class Handlers {
     authFail(req, res) {
         res.sendStatus(HttpStatus.UNAUTHORIZED);

@@ -4,11 +4,11 @@ import { User } from '../../models/User';
 
 export default class UserService extends BaseService<User> {
 
-    constructor(connection: any) {
+    constructor(private connection: any) {
         super(new UserRepository(connection));
     }
 
-    public findByEmail = async (email: String): Promise<User[]> => {
-        return await UserRepository.findByEmail({ email: email });
+    public findByEmail = async (email: string): Promise<User> => {                
+        return await new UserRepository(this.connection).findByEmail(email);
     }
 }

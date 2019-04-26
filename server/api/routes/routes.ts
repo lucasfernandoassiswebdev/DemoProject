@@ -1,5 +1,5 @@
 import { Application } from 'express';
-import { TokenRoutes } from '../modules/auth/auth';
+import { TokenRoutes } from '../modules/auth/TokenRoutes';
 import UserRoutes from '../modules/users/UserRoutes';
 
 class Routes {

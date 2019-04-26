@@ -2,9 +2,9 @@ import * as express from 'express';
 import * as morgan from 'morgan';
 import * as bodyParser from 'body-parser';
 import Routes from './routes/routes';
-import Handlers from '../api/modules/responses/handlers';
+import { Manipuladores, Autenticacao } from 'bases';
 import { Connection } from '../config/database';
-import Auth from './auth';
+import UserService from './modules/users/UserService';
 import * as mongoose from 'mongoose'
 
 class Api {
@@ -20,13 +20,15 @@ class Api {
 
     middleware(): void {
         Connection.then((connection) => {
+            let userService: UserService = new UserService(connection);
+
             mongoose.connect(this.config.mongoConnectionString, { useNewUrlParser: true }).then(() => {
                 this.express.use(morgan('dev'));
                 this.express.use(bodyParser.urlencoded({ extended: true }));
                 this.express.use(bodyParser.json());
-                this.express.use(Handlers.errorHandlerApi);
-                this.express.use(Auth.config(connection).initialize());
-                this.router(this.express, Auth.config(connection), connection);
+                this.express.use(Manipuladores.manipuladorErroApi);
+                this.express.use(Autenticacao.configurar(userService, this.config.secret).initialize());
+                this.router(this.express, Autenticacao.configurar(userService, this.config.secret), connection);
                 console.log('-> Conexão com o banco de dados efetuada com sucesso!');
             }).catch((error) => {
                 console.log(`-> Falha ao tentar conectar no banco de dados(Mongo) ${error}`);

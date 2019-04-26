@@ -1,33 +1,26 @@
-import { BaseController } from 'bases';
+import { Controller, Manipuladores, Criptografia } from 'bases';
 import { User } from '../../models/User';
 import UserService from './UserService';
-import { Request, Response } from 'express';
-import Handlers from '../responses/handlers';
-import * as bcrypt from 'bcrypt';
+import { Request, Response, Application } from 'express';
 import * as _ from 'lodash';
 
-export default class UserController extends BaseController<User> {
+export default class UserController extends Controller<User> {
 
     private userService: UserService;
 
-    constructor(connection: any) {
-        super(new UserService(connection));
+    constructor(public app: Application, connection: any) {
+        super();
         this.userService = new UserService(connection);
     }
 
-    public create = async (req: Request, res: Response) => {
-        if (!req.body.dtCriacao)
-            req.body.dtCriacao = new Date();
+    // this.app.route(`/$${rotaBase}/buscar`).all(auth.authenticate()).post((req: Request, res: Response) => {
+    //     if (!req.body.dtCriacao)
+    //         req.body.dtCriacao = new Date();
 
-        this.hashPassword(req.body);
+    //     req.body.senha = Criptografia.criptografar(req.body.senha);
 
-        await this.userService.save(req.body)
-            .then(_.partial(Handlers.onSuccess, res))
-            .catch(_.partial(Handlers.onError, res, "Erro ao salvar dados"));
-    }
-
-    private hashPassword = (user) => {
-        const salt = bcrypt.genSaltSync(10);
-        user.password = bcrypt.hashSync(user.password, salt);
-    }
+    //     await this.userService.salvar(req.body)
+    //         .then(_.partial(Manipuladores.sucesso, res))
+    //         .catch(_.partial(Manipuladores.erro, res, "Erro ao salvar dados"));
+    // });
 }

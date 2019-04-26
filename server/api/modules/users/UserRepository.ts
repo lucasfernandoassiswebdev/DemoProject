@@ -1,13 +1,13 @@
 import { User } from '../../models/User';
-import { BaseRepository } from 'bases';
+import { Repositorio } from 'bases';
 
-export default class UserRepository extends BaseRepository<User> {
+export default class UserRepository extends Repositorio<User> {
 
     constructor(connection: any) {
         super(User, connection);
     }
 
-    public async findByEmail(email: string): Promise<User> {        
-        return await this.findOne({ email: email });
+    public async buscarPorEmail(email: string): Promise<User> {        
+        return await this.buscarUm({ email: email });
     }
 }

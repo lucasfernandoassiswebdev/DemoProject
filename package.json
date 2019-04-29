@@ -4,8 +4,8 @@
   "description": "Projeto para demonstração do uso do projeto Bases na prática",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon -x NODE_ENV=test ts-node server/server.ts",
-    "builded": "nodemon -x NODE_ENV=test node ./dist/server.js"
+    "start": "nodemon -x NODE_ENV=teste ts-node server/servidor.ts",
+    "builded": "nodemon -x NODE_ENV=teste node ./dist/servidor.js"
   },
   "keywords": [
     "Demo",

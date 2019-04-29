@@ -1,46 +1,42 @@
 import * as express from 'express';
 import * as morgan from 'morgan';
 import * as bodyParser from 'body-parser';
-import Routes from './routes/routes';
 import { Manipuladores, Autenticacao } from 'bases';
 import { Connection } from '../config/database';
-import UserService from './modules/users/UserService';
+import RotasConfig from './módulos/rotas/RotasConfig';
+import UserService from './módulos/usuarios/UsuarioServico';
 import * as mongoose from 'mongoose'
 
 class Api {
 
-    public express: express.Application;
+    public app: express.Application;
 
     constructor() {
-        this.express = express();
+        this.app = express();
         this.middleware();
     }
 
-    private config = require('../config/env/config')();
+    private configuracao = require('../config/ambiente/configuracao')();
 
     middleware(): void {
         Connection.then((connection) => {
             let userService: UserService = new UserService(connection);
 
-            mongoose.connect(this.config.mongoConnectionString, { useNewUrlParser: true }).then(() => {
-                this.express.use(morgan('dev'));
-                this.express.use(bodyParser.urlencoded({ extended: true }));
-                this.express.use(bodyParser.json());
-                this.express.use(Manipuladores.manipuladorErroApi);
-                this.express.use(Autenticacao.configurar(userService, this.config.secret).initialize());
-                this.router(this.express, Autenticacao.configurar(userService, this.config.secret), connection);
+            mongoose.connect(this.configuracao.stringConexaoMongo, { useNewUrlParser: true }).then(() => {
+                this.app.use(morgan('dev'));
+                this.app.use(bodyParser.urlencoded({ extended: true }));
+                this.app.use(bodyParser.json());
+                this.app.use(Manipuladores.manipuladorErroApi);
+                this.app.use(Autenticacao.configurar(userService, this.configuracao.chave).iniciar());
+                RotasConfig.iniciarRotas(this.app, Autenticacao.configurar(userService, this.configuracao.chave), connection);            
                 console.log('-> Conexão com o banco de dados efetuada com sucesso!');
-            }).catch((error) => {
-                console.log(`-> Falha ao tentar conectar no banco de dados(Mongo) ${error}`);
+            }).catch((erro) => {
+                console.log(`-> Falha ao tentar conectar no banco de dados(Mongo) ${erro}`);
             });
-        }).catch((error) => {
-            console.log(`-> Falha ao tentar conectar no banco de dados(Postgres) ${error}`);
+        }).catch((erro) => {
+            console.log(`-> Falha ao tentar conectar no banco de dados(Postgres) ${erro}`);
         });
-    }
-
-    private router(app: express.Application, auth: any, connection: any): void {
-        Routes.initRoutes(app, auth, connection);
     }
 }
 
-export default new Api().express;
+export default new Api().app;

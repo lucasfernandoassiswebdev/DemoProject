@@ -17,7 +17,7 @@ export default class UsuarioServico extends Servico<Usuario> {
      * @param email <string>
      * @returns Promise<Usuario>
      */
-    public findByEmail = async (email: string): Promise<Usuario> => {                
+    public buscarPorEmail = async (email: string): Promise<Usuario> => {                
         return await new UsuarioRepositorio(this.conexao).buscarPorEmail(email);
     }
 }

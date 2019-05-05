@@ -14,10 +14,11 @@ class UsuarioRotas implements RotasInterface {
     public exporRotas = (app: Application, aut: any, conexao: any): void => {
         let usuarioController = new UsuarioController(conexao);
 
-        app.route('/usuarios/salvar').post(usuarioController.salvar);
-        app.route('/usuarios/:pagina/:limite').get(usuarioController.buscarTodos);
+        app.route('/usuarios/salvar').all(aut.autenticar()).post(usuarioController.salvar);
+        app.route('/usuarios/buscaPorNome').all(aut.autenticar()).get(usuarioController.buscar);
+        app.route('/usuarios/:pagina/:limite').all(aut.autenticar()).get(usuarioController.buscarTodos);
         app.route('/usuarios/:id').all(aut.autenticar()).get(usuarioController.buscarPorId);
-        app.route('/usuarios/remover/:id').delete(usuarioController.remover);
+        app.route('/usuarios/remover/:id').all(aut.autenticar()).delete(usuarioController.remover);
     }
 }
 

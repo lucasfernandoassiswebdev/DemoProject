@@ -1,5 +1,5 @@
 module.exports = {
-    ambiente: 'test',    
+    ambiente: 'teste',    
     chave: 'S3cr3t',
     portaServidor: 3000,
     stringConexaoMongo: 'mongodb://localhost:27017/NOC',

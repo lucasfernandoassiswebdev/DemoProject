@@ -43,12 +43,6 @@ __decorate([
         name: "cpf"
     })
 ], Usuario.prototype, "cpf", void 0);
-__decorate([
-    typeorm_1.Column("date", {
-        nullable: false,
-        name: "dt_criacao"
-    })
-], Usuario.prototype, "dtCriacao", void 0);
 Usuario = __decorate([
     typeorm_1.Entity("Usuario")
 ], Usuario);

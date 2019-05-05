@@ -19,8 +19,8 @@ class Api {
     private configuracao = require('../config/ambiente/configuracao')();
 
     middleware(): void {
-        Connection.then((connection) => {
-            let userService: UserService = new UserService(connection);
+        Connection.then((conexao: any) => {
+            let userService: UserService = new UserService(conexao);
 
             mongoose.connect(this.configuracao.stringConexaoMongo, { useNewUrlParser: true }).then(() => {
                 this.app.use(morgan('dev'));
@@ -28,7 +28,7 @@ class Api {
                 this.app.use(bodyParser.json());
                 this.app.use(Manipuladores.manipuladorErroApi);
                 this.app.use(Autenticacao.configurar(userService, this.configuracao.chave).iniciar());
-                RotasConfig.iniciarRotas(this.app, Autenticacao.configurar(userService, this.configuracao.chave), connection);            
+                RotasConfig.iniciarRotas(this.app, Autenticacao.configurar(userService, this.configuracao.chave), conexao);            
                 console.log('-> Conexão com o banco de dados efetuada com sucesso!');
             }).catch((erro) => {
                 console.log(`-> Falha ao tentar conectar no banco de dados(Mongo) ${erro}`);

@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, UpdateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity("Usuario")
 export class Usuario {
@@ -36,10 +36,4 @@ export class Usuario {
         name: "cpf"
     })
     cpf: string;
-
-    @Column("date", {
-        nullable: false,
-        name: "dt_criacao"
-    })
-    dtCriacao: Date;
 }

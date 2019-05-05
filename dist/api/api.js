@@ -15,15 +15,15 @@ class Api {
         this.middleware();
     }
     middleware() {
-        database_1.Connection.then((connection) => {
-            let userService = new UsuarioServico_1.default(connection);
+        database_1.Connection.then((conexao) => {
+            let userService = new UsuarioServico_1.default(conexao);
             mongoose.connect(this.configuracao.stringConexaoMongo, { useNewUrlParser: true }).then(() => {
                 this.app.use(morgan('dev'));
                 this.app.use(bodyParser.urlencoded({ extended: true }));
                 this.app.use(bodyParser.json());
                 this.app.use(bases_1.Manipuladores.manipuladorErroApi);
                 this.app.use(bases_1.Autenticacao.configurar(userService, this.configuracao.chave).iniciar());
-                RotasConfig_1.default.iniciarRotas(this.app, bases_1.Autenticacao.configurar(userService, this.configuracao.chave), connection);
+                RotasConfig_1.default.iniciarRotas(this.app, bases_1.Autenticacao.configurar(userService, this.configuracao.chave), conexao);
                 console.log('-> Conexão com o banco de dados efetuada com sucesso!');
             }).catch((erro) => {
                 console.log(`-> Falha ao tentar conectar no banco de dados(Mongo) ${erro}`);

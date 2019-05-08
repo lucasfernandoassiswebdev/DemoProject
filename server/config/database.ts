@@ -4,7 +4,7 @@ import { Usuario } from '../api/modelos/Usuario';
 const configuracao = require('../config/ambiente/configuracao')();
 
 export const Connection = createConnection({
-    name: 'default-connection',
+    name: configuracao.nomeConexao,
     type: configuracao.dialeto,
     host: configuracao.host,
     port: configuracao.portaPostgres,

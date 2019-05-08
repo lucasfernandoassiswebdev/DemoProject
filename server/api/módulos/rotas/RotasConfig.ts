@@ -14,15 +14,14 @@ class RotasConfig {
     /** 
      * Mapeia a lista de rotas passadas como parâmetro na API
      * @param app <Application> (express)
-     * @param aut <any> Classe que irá autenticar as rotas quando necessário
-     * @param conexao <any> Conexão com o banco
+     * @param aut <any> Classe que irá autenticar as rotas quando necessário     
     */
-    public iniciarRotas = (app: Application, aut: any, conexao: any): void => {
+    public iniciarRotas = (app: Application, aut: any): void => {
         let arquivosDeRota: RotasInterface[] = new Array<RotasInterface>();
-        arquivosDeRota.push(new TokenRotas(new UsuarioServico(conexao), this.configuracao.chave));
+        arquivosDeRota.push(new TokenRotas(UsuarioServico, this.configuracao.chave));
         arquivosDeRota.push(UsuarioRotas);
 
-        Rotas.iniciarRotas(app, aut, arquivosDeRota, conexao);
+        Rotas.iniciarRotas(app, aut, arquivosDeRota);
     }
 }
 

@@ -7,18 +7,19 @@ class UsuarioRotas implements RotasInterface {
     /**
      * Inicia as rotas de usuário
      * @param app <Application> (express)
-     * @param aut <any> Método que irá autenticar as rotas
-     * @param conexao <any> Conexão com o banco
+     * @param aut <any> Método que irá autenticar as rotas     
      * @returns void
      */
-    public exporRotas = (app: Application, aut: any, conexao: any): void => {
-        let usuarioController = new UsuarioController(conexao);
+    public exporRotas = (app: Application, aut: any): void => {
+        app.route('/usuarios/salvar').all(aut.autenticar()).post(UsuarioController.salvar);
+        app.route('/usuarios/buscaPorNome').all(aut.autenticar()).get(UsuarioController.buscar);
+        app.route('/usuarios/:pagina/:limite').all(aut.autenticar()).get(UsuarioController.buscarTodos);
+        app.route('/usuarios/:id').all(aut.autenticar()).get(UsuarioController.buscarPorId);
+        app.route('/usuarios/remover/:id').all(aut.autenticar()).delete(UsuarioController.remover);
+    }
 
-        app.route('/usuarios/salvar').all(aut.autenticar()).post(usuarioController.salvar);
-        app.route('/usuarios/buscaPorNome').all(aut.autenticar()).get(usuarioController.buscar);
-        app.route('/usuarios/:pagina/:limite').all(aut.autenticar()).get(usuarioController.buscarTodos);
-        app.route('/usuarios/:id').all(aut.autenticar()).get(usuarioController.buscarPorId);
-        app.route('/usuarios/remover/:id').all(aut.autenticar()).delete(usuarioController.remover);
+    public exporControllers(): any[] {
+        return [UsuarioController];
     }
 }
 

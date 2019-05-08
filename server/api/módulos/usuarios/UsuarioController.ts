@@ -2,9 +2,11 @@ import { Controller } from 'bases';
 import { Usuario } from '../../modelos/Usuario';
 import UsuarioServico from './UsuarioServico';
 
-export default class UsuarioController extends Controller<Usuario> {
+class UsuarioController extends Controller<Usuario> {
 
-    constructor(connection: any) {
-        super(new UsuarioServico(connection));
+    constructor() {
+        super(UsuarioServico);
     }
 }
+
+export default new UsuarioController();    

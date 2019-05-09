@@ -4,6 +4,7 @@
   "description": "Projeto para demonstração do uso do projeto Bases na prática",
   "main": "server.js",
   "scripts": {
+    "compile": "tsc -w --diagnostics",
     "start": "nodemon -x NODE_ENV=teste ts-node server/servidor.ts",
     "builded": "nodemon -x NODE_ENV=teste node ./dist/servidor.js"
   },

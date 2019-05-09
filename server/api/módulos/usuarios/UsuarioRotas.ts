@@ -17,7 +17,7 @@ class UsuarioRotas implements RotasInterface {
         app.route('/usuarios/:id').all(aut.autenticar()).get(UsuarioController.buscarPorId);
         app.route('/usuarios/remover/:id').all(aut.autenticar()).delete(UsuarioController.remover);
     }
-    
+        
     public exporControllers(): any[] {
         return [UsuarioController];
     }

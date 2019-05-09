@@ -3,10 +3,7 @@ import UsuarioRepositorio from './UsuarioRepositorio';
 import { Usuario } from '../../modelos/Usuario';
 
 class UsuarioServico extends Servico<Usuario> {
-
-    /**
-     * Construtor de UsuarioServico     
-     */
+    
     constructor() {
         super(UsuarioRepositorio);
     }

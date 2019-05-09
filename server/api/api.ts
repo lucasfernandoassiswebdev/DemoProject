@@ -5,11 +5,12 @@ import { Manipuladores, Autenticacao } from 'bases';
 import { Connection } from '../config/database';
 import RotasConfig from './módulos/rotas/RotasConfig';
 import UsuarioServico from './módulos/usuarios/UsuarioServico';
-import * as mongoose from 'mongoose'
+import * as mongoose from 'mongoose';
+import * as passport from 'passport';
 
 class Api {
 
-    public app: express.Application;
+    public app: express.Application;    
 
     constructor() {
         this.app = express();
@@ -20,25 +21,30 @@ class Api {
 
     private middleware() {
 
-        Connection.then(conexao => {            
-            console.log('-> Conexão com o banco de dados efetuada com sucesso! (Postgres)');
-            
-            this.app.use(Autenticacao.configurar(UsuarioServico, this.configuracao.chave).iniciar());
-            RotasConfig.iniciarRotas(this.app, Autenticacao.configurar(UsuarioServico, this.configuracao.chave));
-        }).catch((erro) => {
-            console.log(`-> Falha ao tentar conectar no banco de dados(Postgres) ${erro}`);
-        }).then(mongoose.connect(this.configuracao.stringConexaoMongo, { useNewUrlParser: true }).then(() => {
-            console.log('-> Conexão com o banco de dados efetuada com sucesso! (Mongo)');
+        Connection.then((conexao: any) => {            
+            console.error('-> Conexão com o banco de dados efetuada com sucesso! (Postgres)');
         }).catch((erro: any) => {
-            console.log(`-> Falha ao tentar conectar no banco de dados(Mongo) ${erro}`);
-        })).then(() => {            
+            console.error(`-> Falha ao tentar conectar no banco de dados(Postgres) ${erro}`);
+        }).then(mongoose.connect(this.configuracao.stringConexaoMongo, { useNewUrlParser: true }).then(() => {            
+            console.error('-> Conexão com o banco de dados efetuada com sucesso! (Mongo)');
+        }).catch((erro: any) => {
+            console.error(`-> Falha ao tentar conectar no banco de dados(Mongo) ${erro}`);
+        })).then(() => {
             this.app.use(morgan('dev'));
             this.app.use(bodyParser.urlencoded({ extended: true }));
             this.app.use(bodyParser.json());
             this.app.use(Manipuladores.manipuladorErroApi);
         }).catch((erro: any) => {
-            console.log(`-> Falha ao iniciar a definir middlewares ${erro}`);
-        });        
+            console.error(`-> Falha ao iniciar a definir middlewares ${erro}`);
+        }).then(() => {            
+            Autenticacao.configurar(passport, UsuarioServico, this.configuracao.chave);            
+        }).catch((erro: any) => {
+            console.error(`Erro ao configurar estratégia de autenticação da API ${erro}`);
+        }).then(() => {            
+            RotasConfig.iniciarRotas(this.app, Autenticacao.configurar(passport, UsuarioServico, this.configuracao.chave));
+        }).catch((erro: any) => {
+            console.error(`Erro ao iniciar rotas da API ${erro}`);
+        });
     }
 }
 

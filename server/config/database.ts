@@ -1,5 +1,5 @@
 import { createConnection } from 'typeorm';
-import { Usuario } from '../api/modelos/Usuario';
+import Entidades from '../api/modelos/Entidades';
 
 const configuracao = require('../config/ambiente/configuracao')();
 
@@ -11,9 +11,7 @@ export const Connection = createConnection({
     username: configuracao.usuario,
     password: configuracao.senha,
     database: configuracao.bd,
-    entities: [
-        Usuario
-    ],
+    entities: Entidades,
     subscribers: [
         ""
     ],

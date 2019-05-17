@@ -14,12 +14,12 @@ class Api {
 
     constructor() {
         this.app = express();
-        this.middleware();
+        this.iniciaApi();
     }
 
     private configuracao = require('../config/ambiente/configuracao')();
 
-    private middleware() {
+    private iniciaApi() {
 
         Connection.then((conexao: any) => {            
             console.error('-> Conexão com o banco de dados efetuada com sucesso! (Postgres)');

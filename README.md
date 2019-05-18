@@ -132,7 +132,9 @@ São propostos 4 arquivos para cada módulo:
 
 ### Entidades
 
-A aplicação ao se conectar com o banco de dados, irá verificar as entidades da nossa aplicação e sincronizá-las com este banco, para isso é necessário expor todas as entidades que desejamos utilizar, fazer isso é bem simples. A cada nova entidade criada, basta apenas importá-la no arquivo **Entidades** localizado em **server/api/modelos/Entidades.ts**.
+A aplicação, ao se conectar com o banco de dados, irá verificar as entidades da nossa aplicação e sincronizá-las com este banco, para isso é necessário expor todas as entidades que desejamos utilizar, fazer isso é bem simples. A cada nova entidade criada, basta apenas importá-la no arquivo **Entidades** localizado em **server/api/modelos/Entidades.ts**.
+
+Note que este arquivo é o mesmo utilizado no nosso arquivo de configuração da conexão com o banco de dados, **database.ts**, sendo assim, é bem simples alterar esta estrutura caso você opte por não usá-la.
 
 - exemplo:
 

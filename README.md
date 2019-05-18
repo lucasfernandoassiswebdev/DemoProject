@@ -26,9 +26,11 @@ Localize o arquivo **database.ts** no diretório **server/config/**. Este arquiv
 
 Para definir variáveis de ambiente neste modelo de projeto, basta criar os arquivos desejados no diretório **server/config/ambiente/nome_do_arquivo.env.ts**.
 
-Neste projeto, por padrão utilizaremos o ambiente de **teste**. Nesta variável foi definido um banco postgres local chamado **demo-database**. Você pode os valores informados no arquivo caso deseje utilizar outro banco.
+Neste projeto, por padrão utilizaremos o ambiente de **teste**. Nesta variável foi definido um banco postgres local chamado **demo-database**. Você pode alterar os valores informados no arquivo caso deseje utilizar outro banco.
 
-Em seguida, será necessário criar a tabela correspondente a entidade que utilizaremos neste projeto como base para os exemplos, **Usuario**. Utilize o seguinte comando:
+A aplicação consistirá em operações voltadas a uma entidade chamada **Usuario**. Iremos criar rotas na nossa API para manipular informações voltadas a esta entidade.
+
+Em seguida, será necessário criar a tabela correspondente a entidade que utilizaremos para os exemplos. Utilize o seguinte comando:
 
 ```sql
 CREATE TABLE Usuario (
@@ -64,7 +66,7 @@ const servidor = http
 
 ```
 
-A **Api** é a classe responsável por fazer as configurações iniciais da aplicação, em ordem, é criada uma instância de **express** que representa a nossa aplicação em si, em seguida é feita a conexão com o banco de dados(Postgres e MongoDB), configurados os pacotes, middlewares, estratégia de autenticação e por fim são mapeadas as rotas da API.
+A **Api** é a classe responsável por fazer as configurações iniciais da aplicação, em ordem, é criada uma instância de **express** que representa a nossa aplicação em si, em seguida é feita a conexão com o banco de dados(Postgres e MongoDB), são configurados os pacotes utilizados, middlewares, estratégia de autenticação e por fim são mapeadas as rotas da API.
 
 ```typescript
 import * as express from 'express';
@@ -121,9 +123,9 @@ export default new Api().app;
 
 ```
 
-Nesta proposta de arquitetura, são criados módulos para cada entidade, você pode conferir o módulo de **Usuario** no diretório **server/api/módulos/usuarios**.
+Nesta proposta de arquitetura serão criados módulos(pastas) para cada entidade, você pode conferir o módulo de **Usuario** no diretório **server/api/módulos/usuarios**.
 São propostos 4 arquivos para cada módulo:
-- Controller -> Responsável por conter os métodos que serão chamados de acordo com as rotas chamadas.
-- Repositorio -> Classe responsável por se conectar e realizar as operações no banco de dados.
-- Rotas -> Classe responsável por mapear e expor para a API as rotas do módulo em questão.
-- Servico -> Classe responsável por manipular, verificar e tratar as regras de negócio do aplicação.
+- **Controller** -> Responsável por conter os métodos que serão chamados de acordo com as rotas chamadas. Neste arquivo temos a manipulação da requisição recebida e é definida, manipulada e enviada uma resposta adequada para o cliente.
+- **Repositorio** -> Classe responsável por se conectar e realizar as operações no banco de dados.
+- **Rotas** -> Classe responsável por mapear e expor para a API as rotas do módulo em questão, indicando o verbo http adequado, definição dos parâmetros necessários e a estratégia de autenticação da rota caso necessário.
+- **Servico** -> Classe responsável por manipular, verificar e tratar as regras de negócio do aplicação, nesta classe serão feitas as validações e verificações sobre as operações a serem realizadas na aplicação.

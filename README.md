@@ -129,3 +129,55 @@ São propostos 4 arquivos para cada módulo:
 - **Repositorio** -> Classe responsável por se conectar e realizar as operações no banco de dados.
 - **Rotas** -> Classe responsável por mapear e expor para a API as rotas do módulo em questão, indicando o verbo http adequado, definição dos parâmetros necessários e a estratégia de autenticação da rota caso necessário.
 - **Servico** -> Classe responsável por manipular, verificar e tratar as regras de negócio do aplicação, nesta classe serão feitas as validações e verificações sobre as operações a serem realizadas na aplicação.
+
+### Entidades
+
+A aplicação ao se conectar com o banco de dados, irá verificar as entidades da nossa aplicação e sincronizá-las com este banco, para isso é necessário expor todas as entidades que desejamos utilizar, fazer isso é bem simples. A cada nova entidade criada, basta apenas importá-la no arquivo **Entidades** localizado em **server/api/modelos/Entidades.ts**.
+
+- exemplo:
+
+```typescript
+import { Entidade1 } from './Modulo1';
+import { Entidade2 } from './Modulo2';
+import { Entidade3 } from './Modulo3';
+
+const Entidades = [Entidade1, Entidade2, Entidade3];
+
+export default Entidades;
+```
+
+### Rotas
+
+O mapeamento e exposição das rotas para a aplicação é bem simples, foi criada a classe de configuração **RotasConfig** no diretório **server/api/módulos/rotas/RotasConfig.ts**.
+Para expor as rotas de cada módulo, basta importar os arquivos correspondentes nesta classe e adicioná-los a variável **arquivosDeRota**. O **bases** irá utilizar os arquivos desta variável para automaticamente mapear as rotas na API.
+
+```typescript
+import { Application } from 'express';
+import { Rotas, RotasInterface, TokenRotas } from 'bases';
+
+import UsuarioServico from '../usuarios/UsuarioServico';
+
+//importação dos arquivos de rota abaixo
+import UsuarioRotas from '../usuarios/UsuarioRotas';
+
+
+class RotasConfig {
+
+    private configuracao = require('../../../config/ambiente/configuracao')();
+
+    /** 
+     * Mapeia a lista de rotas passadas como parâmetro na API
+     * @param app <Application> (express)
+     * @param aut <any> Classe que irá autenticar as rotas quando necessário     
+    */
+    public iniciarRotas = (app: Application, aut: any): void => {
+        let arquivosDeRota: RotasInterface[] = new Array<RotasInterface>();
+        arquivosDeRota.push(new TokenRotas(UsuarioServico, this.configuracao.chave));
+        arquivosDeRota.push(UsuarioRotas);
+
+        Rotas.iniciarRotas(app, aut, arquivosDeRota);
+    }
+}
+
+export default new RotasConfig();
+```

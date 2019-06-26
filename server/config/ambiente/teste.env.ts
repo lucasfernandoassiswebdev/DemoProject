@@ -9,5 +9,6 @@ module.exports = {
     portaPostgres: 5432,
     dialeto: 'postgres',
     usuario: 'postgres',
-    senha: 'a'
+    senha: 'a',
+    sincronizar: true
 }

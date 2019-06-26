@@ -11,7 +11,8 @@ export const Connection = createConnection({
     username: configuracao.usuario,
     password: configuracao.senha,
     database: configuracao.bd,
-    entities: Entidades,
+    synchronize: configuracao.sincronizar,
+    entities: Entidades,    
     subscribers: [
         ""
     ],

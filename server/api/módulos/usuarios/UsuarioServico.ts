@@ -13,7 +13,7 @@ class UsuarioServico extends Servico<Usuario> {
      * @param email <string> email do usuário a ser retornado
      * @returns Promise<Usuario> Retorna o usuário correspondente ao e-mail passado como parâmetro
      */
-    public buscarPorEmail = async (email: string): Promise<Usuario> => {
+    public buscarUsuario = async (email: string): Promise<Usuario> => {
         return await UsuarioRepositorio.buscarPorEmail(email);
     }
 }

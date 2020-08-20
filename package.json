@@ -18,7 +18,7 @@
   "dependencies": {
     "@types/morgan": "^1.7.35",
     "bases": "git+https://github.com/lucasfernandoassiswebdev/Bases.git",
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "http": "0.0.0",

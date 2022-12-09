@@ -20,7 +20,7 @@
     "bases": "git+https://github.com/lucasfernandoassiswebdev/Bases.git",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.18.3",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "http": "0.0.0",
     "http-status": "^1.3.2",
     "jwt-simple": "^0.5.6",
